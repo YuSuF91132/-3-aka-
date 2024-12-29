@@ -2,11 +2,11 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 import asyncio, logging
-# from config import token
+from config import TOKEN
 
 logging.basicConfig(level=logging.DEBUG)
 
-bot = Bot('8158021530:AAFz8Ycb_QP6ikvD8-dJLSS-BB1gRiPdEeU')
+bot = Bot(token = TOKEN)
 dp = Dispatcher()
 
 AUTOPARTS = {
@@ -115,43 +115,43 @@ async def choose_quantity(callback: types.CallbackQuery):
                                       )
 
 
-# @dp.callback_query(F.data.startswith('menu_'))
-# async def choose_phonepart(callback: types.CallbackQuery):
-#     phonepart = callback.data.split("_")[1]
-#     orders[callback.from_user.id] = {"phonepart" : phonepart}
+@dp.callback_query(F.data.startswith('menu_'))
+async def choose_phonepart(callback: types.CallbackQuery):
+    phonepart = callback.data.split("_")[1]
+    orders[callback.from_user.id] = {"phonepart" : phonepart}
 
-#     builder = InlineKeyboardBuilder()
-#     for i in range(1, 5):
-#         builder.button(
-#             text=str(i),
-#             callback_data=f"quantity_{i}"
-#         )    
-#     builder.adjust(3)
-#     await callback.message.answer(
-#         f"Вы выбрали {phonepart}. Укажите кол-во:",
-#         reply_markup=builder.as_markup()
-#     )
+    builder = InlineKeyboardBuilder()
+    for i in range(1, 5):
+        builder.button(
+            text=str(i),
+            callback_data=f"quantity_{i}"
+        )    
+    builder.adjust(3)
+    await callback.message.answer(
+        f"Вы выбрали {phonepart}. Укажите кол-во:",
+        reply_markup=builder.as_markup()
+    )
 
-# @dp.callback_query(F.data.startswith('quantity_'))
-# async def choose_quantity(callback: types.CallbackQuery):
-#     quantity = int(callback.data.split("_")[1])
-#     user_id = callback.from_user.id
+@dp.callback_query(F.data.startswith('quantity_'))
+async def choose_quantity(callback: types.CallbackQuery):
+    quantity = int(callback.data.split("_")[1])
+    user_id = callback.from_user.id
 
-#     if user_id in orders:
-#         orders[user_id]["quantity"] = quantity
-#         phonepart = orders[user_id]["phonepart"]
-#         price = PHONEPARTS[phonepart] * quantity 
+    if user_id in orders:
+        orders[user_id]["quantity"] = quantity
+        phonepart = orders[user_id]["phonepart"]
+        price = PHONEPARTS[phonepart] * quantity 
 
-#         builder = InlineKeyboardBuilder()
-#         builder.button(
-#                 text="Подтвердить заказ",
-#                 callback_data="confirm_orders"
-#             )    
+        builder = InlineKeyboardBuilder()
+        builder.button(
+                text="Подтвердить заказ",
+                callback_data="confirm_orders"
+            )    
 
-#         await callback.message.answer(
-#             f"Ваш заказ: {phonepart} x {quantity} = {price} денег.\nПодтвердите заказ",
-#             reply_markup=builder.as_markup()                                     
-#         )
+        await callback.message.answer(
+            f"Ваш заказ: {phonepart} x {quantity} = {price} денег.\nПодтвердите заказ",
+            reply_markup=builder.as_markup()                                     
+        )
 
 
 
