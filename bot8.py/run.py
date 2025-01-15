@@ -5,10 +5,9 @@ from router import router
 
 logging.basicConfig(level=logging.DEBUG)
 
-# load_dotenv()
+load_dotenv()
 
-# bot = Bot(token=os.getenv("token"))
-bot = Bot("8158021530:AAFz8Ycb_QP6ikvD8-dJLSS-BB1gRiPdEeU") 
+bot = Bot(token=os.getenv("token"))
 dp = Dispatcher()
 
 async def main():
