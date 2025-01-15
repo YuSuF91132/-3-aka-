@@ -24,9 +24,9 @@ async def help(message: types.Message):
 @router.message(Command("parse"))
 async def parse(message: types.Message):
     try:
-        news = await parse_news()
+        news = parse_news()
         if news:
-            await message.answer(f" Вот новости:\n{news}")
+            await message.answer("\n".join(news))
         else:
             await message.answer("Не удалось получить новость")
     except Exception as e:
