@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher
 import asyncio, logging, os
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from router import router 
 
 logging.basicConfig(level=logging.DEBUG)
